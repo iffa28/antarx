@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { ConflictException, Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
 
 import {UsersService} from '../users/users.service.js';
 import { RolesService } from '../roles/roles.service.js';
@@ -41,11 +41,42 @@ export class AuthService {
         });
 
         return {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            hp: user.hp,
-            role: user.roleId
+            message: 'Registrasi berhasil',
+            data: {
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                hp: user.hp,
+                role: user.roleId
+            }
+        }
+    }
+
+    async login(identifier: string, password: string) {
+        const normalizedIdentifier = identifier.trim().toLowerCase();
+
+        const user = await this.usersService.findByIdentifier(normalizedIdentifier);
+        if (!user) {
+            throw new UnauthorizedException('Email/nomor HP atau password salah');
+        }
+
+        const isPasswordValid = await this.passwordService.verify(password, user.password);
+        if (!isPasswordValid) {
+            throw new UnauthorizedException('Email/nomor HP atau password salah');
+        }
+
+
+        // return pesan berhasil login beserta data user
+
+        return {
+            message: 'Login berhasil',
+            data: {
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                hp: user.hp,
+                role: user.role.name,
+            },
         }
     }
 }
