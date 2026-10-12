@@ -5,12 +5,15 @@ import { RolesService } from '../roles/roles.service.js';
 import { PasswordService } from '../security/password.service.js';
 import { RegisterDto } from './dto/register.dto.js';
 
+import { JwtService } from '@nestjs/jwt';
+
 @Injectable()
 export class AuthService {
     constructor(
         private readonly usersService: UsersService,
         private readonly rolesService: RolesService,
-        private readonly passwordService: PasswordService
+        private readonly passwordService: PasswordService,
+        private readonly jwtService: JwtService,
     ) { }
     
     async register(dto: RegisterDto) {
@@ -60,17 +63,32 @@ export class AuthService {
             throw new UnauthorizedException('Email/nomor HP atau password salah');
         }
 
+        if (!user.isActive) {
+            throw new UnauthorizedException(
+            'Akun tidak aktif',
+            );
+        }
+
         const isPasswordValid = await this.passwordService.verify(password, user.password);
         if (!isPasswordValid) {
             throw new UnauthorizedException('Email/nomor HP atau password salah');
         }
 
+        const payload = {
+            sub: user.id,
+            role: user.role.name,
+        };
+
+        const accessToken =
+            await this.jwtService.signAsync(payload);
+
 
         // return pesan berhasil login beserta data user
 
         return {
+            accessToken,
             message: 'Login berhasil',
-            data: {
+            user: {
                 id: user.id,
                 name: user.name,
                 email: user.email,
