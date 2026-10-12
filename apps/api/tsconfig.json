@@ -21,7 +21,7 @@
   },
 
   "exclude": [
-    "node_modules",
-    "dist",
+    "apps/api/node_modules",
+    "apps/api/dist",
   ]
 }
