@@ -1,0 +1,68 @@
+.register-page {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  padding: 32px 20px;
+}
+
+.register-card {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 460px;
+  padding: 32px;
+  text-align: left;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.register-card h1 {
+  margin: 0 0 12px;
+  font-size: 28px;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+}
+
+.register-card p {
+  margin-bottom: 28px;
+  font-size: 15px;
+}
+
+.register-card form {
+  display: grid;
+  gap: 20px;
+}
+
+.register-card small {
+  font-size: 13px;
+}
+
+.register-card button {
+  padding: 12px;
+  font: inherit;
+  font-weight: 600;
+  color: white;
+  background: green;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.register-card button:hover {
+  background: rgb(0, 185, 0);
+}
+
+.register-card button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.register-card > button {
+  margin-top: 20px;
+}
+
+@media (max-width: 480px) {
+  .register-card {
+    padding: 24px;
+  }
+}

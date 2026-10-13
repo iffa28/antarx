@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { mockLogin } from '../api/mockLogin';
 import './LoginPage.css';
+import FormField from '../../../components/FormField';
 
-function LoginPage() {
+function LoginPage({ onGoToRegister }) {
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -44,33 +45,34 @@ function LoginPage() {
         <p>Gunakan email atau nomor HP yang terdaftar.</p>
 
         <form onSubmit={handleSubmit}>
-          <div className="form-field">
-            <label htmlFor="identifier">Email atau nomor HP</label>
-            <input
-              id="identifier"
-              name="identifier"
-              type="text"
-              autoComplete="username"
-              required
-            />
-          </div>
+          <FormField
+            id="identifier"
+            label="Email atau nomor HP"
+            name="identifier"
+            autoComplete="username"
+            required
+          />
 
-          <div className="form-field">
-            <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              autoComplete="current-password"
-              required
-            />
-          </div>
+          <FormField
+            id="password"
+            label="Password"
+            name="password"
+            type="password"
+            autoComplete="current-password"
+            required
+          />
 
           <button type="submit" disabled={isLoading}>
             {isLoading ? 'Memproses...' : 'Masuk'}
           </button>
           <p role="status">{message}</p>
         </form>
+        <p>
+          Belum punya akun?{' '}
+          <button type="button" onClick={onGoToRegister} disabled={isLoading}>
+            Daftar disini
+          </button>
+        </p>
       </section>
     </main>
   );

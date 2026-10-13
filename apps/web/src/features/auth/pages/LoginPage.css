@@ -33,7 +33,7 @@
   gap: 20px;
 }
 
-.form-field {
+/* .form-field {
   display: grid;
   gap: 8px;
 }
@@ -55,7 +55,7 @@
   background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 8px;
-}
+} */
 
 .login-card button {
   padding: 12px;
@@ -72,7 +72,7 @@
   background: rgb(0, 185, 0);
 }
 
-.form-field input:focus-visible,
+/* .form-field input:focus-visible, */
 .login-card button:focus-visible {
   outline: 3px solid var(--accent);
   outline-offset: 3px;
